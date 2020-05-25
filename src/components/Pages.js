@@ -3,6 +3,8 @@ import Typical from "react-typical";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -52,28 +54,39 @@ const StyledButtonGroup = styled(ButtonGroup)`
 `;
 
 const MenuBar = styled(FontAwesomeIcon)`
+    display: none;
     position: fixed;
     right: 15%;
     margin-top: 60px;
 
     color: white;
 
-    @media (max-width: 679) {
-        display: flex;
-        position: initial;
-        opacity: 1;
+    @media (max-width: 679px) {
+        display: block;
+    }
+`;
+
+const MenuBarBoxes = styled(MenuItem)`
+    && {
+        background-color: #2d3436;
+        color: white;
+
+        &.MuiList-padding {
+            background-color: #2d3436;
+        }
     }
 `;
 
 const StyledHome = styled.div`
     display: flex;
     color: white;
-
+    flex-basis: auto;
     background-image: url(${bgimage});
     background-size: cover;
 
     width: 100vw;
     height: 100vh;
+    max-width: 100%;
 
     .home-item {
         margin: auto;
@@ -106,6 +119,7 @@ const StyledAbout = styled.div`
     background-color: lightgray;
     width: 100vw;
     height: 100vh;
+    max-width: 100%;
 `;
 
 const AboutPage = styled.div`
@@ -113,7 +127,7 @@ const AboutPage = styled.div`
     grid-row: 1 / 3;
     display: flex;
 
-    background-color: white;
+    background-color: lightgray;
 `;
 
 const DetailAbout = styled.div`
@@ -143,6 +157,7 @@ const SkillPage = styled.div`
     display: flex;
     grid-column: 1 / 6;
     grid-row: 3 / 6;
+    max-width: 100%;
 
     background-color: #c7ecee;
 `;
@@ -195,6 +210,7 @@ const StyledProject = styled.div`
     background-color: #ffbe76;
     width: 100vw;
     height: 100vh;
+    max-width: 100%;
 `;
 
 export default function Page() {
@@ -251,9 +267,71 @@ export default function Page() {
     }
 
     function ShortMenu() {
+        const [anchorEl, setAnchorEl] = React.useState(null);
+
+        const handleClick = (event) => {
+            setAnchorEl(event.currentTarget);
+        };
+
+        const handleClose = (e) => {
+            setAnchorEl(null);
+
+            if (e.target.innerText === "Home") {
+                window.scrollTo(0, HomeRef.current.offsetTop);
+            }
+
+            if (e.target.innerText === "About") {
+                window.scrollTo(0, AboutRef.current.offsetTop);
+            }
+
+            if (e.target.innerText === "Skills") {
+                window.scrollTo(0, SkillsRef.current.offsetTop);
+            }
+
+            if (e.target.innerText === "Project") {
+                window.scrollTo(0, ProjectRef.current.offsetTop);
+            }
+        };
+
         return (
             <React.Fragment>
-                <MenuBar icon={faBars} size="3x" />
+                <MenuBar icon={faBars} size="3x" onClick={handleClick} />
+                <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                >
+                    <MenuBarBoxes
+                        onClick={(e) => {
+                            handleClose(e);
+                        }}
+                    >
+                        Home
+                    </MenuBarBoxes>
+                    <MenuBarBoxes
+                        onClick={(e) => {
+                            handleClose(e);
+                        }}
+                    >
+                        About
+                    </MenuBarBoxes>
+                    <MenuBarBoxes
+                        onClick={(e) => {
+                            handleClose(e);
+                        }}
+                    >
+                        Skills
+                    </MenuBarBoxes>
+                    <MenuBarBoxes
+                        onClick={(e) => {
+                            handleClose(e);
+                        }}
+                    >
+                        Project
+                    </MenuBarBoxes>
+                </Menu>
             </React.Fragment>
         );
     }
@@ -268,9 +346,9 @@ export default function Page() {
                                 "안녕하세요",
                                 1000,
                                 "안녕하세요 이민수의",
-                                500,
+                                2000,
                                 "안녕하세요 이민수의 포트폴리오 입니다",
-                                500,
+                                3000,
                             ]}
                             wrapper="p"
                         />

@@ -37,6 +37,7 @@ const GlobalStyle = createGlobalStyle`
         line-height: 1;
         font-family: 'Noto Sans KR', sans-serif;
         overflow-x: hidden;
+
     }
     ol, ul {
         list-style: none;
@@ -53,8 +54,13 @@ const GlobalStyle = createGlobalStyle`
         border-collapse: collapse;
         border-spacing: 0;
 
+        
+    }
 
-}
+    .MuiList-padding {
+        background-color: #2d3436;
+    }
+
 `;
 
 export default GlobalStyle;
